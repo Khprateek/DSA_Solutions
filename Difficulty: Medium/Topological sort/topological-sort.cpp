@@ -3,6 +3,11 @@
 using namespace std;
 
 // } Driver Code Ends
+
+
+/* DFS for DAG topographic
+
+
 class Solution
 {
     private:
@@ -34,6 +39,44 @@ class Solution
 	        
 	    }
 	    return ans;
+	}
+};
+
+*/
+
+
+
+class Solution
+{
+	public:
+	//Function to return list containing vertices in Topological order. 
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    vector<int> topo;
+	    vector<int> indeg(V,0);
+	    for(int i = 0; i<V;i++){
+	        for(auto it : adj[i]){
+	            indeg[it]++;
+	        }
+	    }
+	    queue<int> q;
+	    for(int i = 0; i< V;i++){
+	        if(indeg[i] == 0){
+	            q.push(i);
+	        }
+	    }
+	    while(!q.empty()){
+	        int node = q.front();
+	        topo.push_back(node);
+	        q.pop();
+	        for(auto it : adj[node]){
+	            indeg[it]--;
+	            if(indeg[it] == 0){
+	                q.push(it);
+	            }
+	        }
+	    }
+	    return topo;
 	}
 };
 

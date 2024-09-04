@@ -5,7 +5,7 @@ class Solution {
             return triangle[ind][pos];
         }
         int mini = INT_MAX;
-        if(dp[ind][pos] != 0){
+        if(dp[ind][pos] != -1){
             return dp[ind][pos];
         }
         for(int i = 0 ;i <= ind; i++){
@@ -16,7 +16,7 @@ class Solution {
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
         int n = triangle.size();
-        vector<vector<int>> dp(n,vector<int>(n,0));
+        vector<vector<int>> dp(n,vector<int>(n,-1));
         return sus(0,0,triangle,dp);
     }
 };

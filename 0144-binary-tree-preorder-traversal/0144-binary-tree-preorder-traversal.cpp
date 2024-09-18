@@ -9,18 +9,27 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+ // THIS IS A ITERATIVE OR SAY BFS TARVERSAL
+
 class Solution {
-    private:
-    void travel(TreeNode *root, vector<int> &ans){
-        if(root == nullptr) return;
-        ans.push_back(root->val);
-        travel(root->left,ans);
-        travel(root->right,ans);
-    }
 public:
     vector<int> preorderTraversal(TreeNode* root) {
+        stack<TreeNode*> st;
         vector<int> ans;
-        travel(root,ans);
+        if(root == nullptr) return ans;
+        st.push(root);
+        while(!st.empty()){
+            TreeNode *front = st.top();
+            st.pop();
+            ans.push_back(front->val);
+            if(front->right != nullptr){
+                st.push(front->right);
+            }
+            if(front->left != nullptr){
+                st.push(front->left);
+            }
+        }
         return ans;
     }
 };

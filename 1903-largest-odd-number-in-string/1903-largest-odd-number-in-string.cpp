@@ -1,19 +1,14 @@
 class Solution {
 public:
     string largestOddNumber(string num) {
-        string ans = "";
-        int n = num.size();
-        int i = n-1;
-        while(i >= 0){
-            while(i >= 0 && (num[i]-'0')%2 == 0){
-                i--;
+        ios_base::sync_with_stdio(false);
+        cin.tie(0);
+        cout.tie(0);
+        for(int i = num.size()-1; i>=0 ; i--){
+            if((num[i]-'0')%2 != 0){
+                return num.substr(0,i+1);
             }
-            if(i < 0){
-                return ans;
-            }
-            ans = num.substr(0,i+1);
-            break;
         }
-        return ans;
+        return "";
     }
 };

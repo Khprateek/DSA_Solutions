@@ -1,10 +1,4 @@
 class Solution {
-    private:
-    void next(string &s){
-        char c = s[0];
-        int n = s.length();
-        s = s.substr(1,n-1) + c;
-    }
 public:
     bool rotateString(string s, string goal) {
         ios_base::sync_with_stdio(false);
@@ -17,11 +11,11 @@ public:
         if(n ==0 ){
             return true;
         }
-        for(int i = 0; i < n; i++){
-            if(s == goal){
+        s = s + s;
+        for(int i = n-1; i >= 0; i--){
+            if(s.substr(i,n) == goal){
                 return true;
             }
-            next(s);
         }
         return false;
     }

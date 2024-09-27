@@ -1,16 +1,13 @@
 class Solution {
+    private:
+    int ways(int ind,vector<int>& dp){
+        if(ind <= 0) return 1;
+        if(dp[ind] != -1) return dp[ind];
+        return dp[ind] = ways(ind-1,dp) + ways(ind-2,dp);
+    }
 public:
     int climbStairs(int n) {
-        if(n == 1) return 1;
-        else if(n==2) return 2;
-        int prev1 = 1;
-        int prev = 2;
-        int ans;
-        for(int i = 3 ; i<=n ; i++){
-            ans = prev1 + prev;
-            prev1 = prev;
-            prev = ans;
-        }
-        return ans;
+        vector<int> dp(n,-1);
+        return ways(n-1,dp);
     }
 };

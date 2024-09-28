@@ -11,6 +11,7 @@ class Solution{
     int mod = 1e9 + 7;
     int sus(int ind,int arr[], int n, int sum,vector<vector<int>> &dp){
         if(ind < 0) return (sum == 0);
+        if(sum < 0) return 0;
         if(dp[ind][sum] != -1) return dp[ind][sum];
         int notpick = sus(ind-1,arr,n,sum,dp);
         int pick = 0;
@@ -23,6 +24,7 @@ class Solution{
 	int perfectSum(int arr[], int n, int sum)
 	{
 	    vector<vector<int>> dp(n,vector<int>(sum+1,-1));
+	    
         return sus(n-1,arr,n,sum,dp);
 	}
 	  

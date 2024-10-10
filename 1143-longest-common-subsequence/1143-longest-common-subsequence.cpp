@@ -1,21 +1,41 @@
 class Solution {
 public:
-    int longestCommonSubsequence(string text1, string text2) {
-        int n = text1.length();
-        int m = text2.length();
-        vector<int> prev(m+1,0);
-        vector<int> curr(m+1,0);
-        for(int ind1 = 1; ind1 <= n; ind1++){
-            for(int ind2 = 1; ind2 <= m; ind2++){
-                if(text1[ind1-1] == text2[ind2-1]){
-                    curr[ind2] = 1 + prev[ind2-1];
+    int longestCommonSubsequence(string s, string t) {
+        int n = s.length();
+        int m = t.length();
+        vector<vector<int>> dp(n,vector<int>(m,0));
+        if(s[0] == t[0]){
+            dp[0][0] = 1;
+        }
+        else{
+            dp[0][0] =0;
+        }
+        for(int i = 1; i< m; i++){
+            if(s[0] == t[i]){
+                dp[0][i] = 1;
+            }
+            else{
+                dp[0][i] =dp[0][i-1];
+            }
+        }
+        for(int i = 1; i< n; i++){
+            if(t[0] == s[i]){
+                dp[i][0] = 1;
+            }
+            else{
+                dp[i][0] =dp[i-1][0];
+            }
+        }
+        for(int i =1; i <n ; i++){
+            for(int j = 1; j < m; j++){
+                if(s[i] == t[j]){
+                    dp[i][j] = 1 + dp[i-1][j-1];
                 }
                 else{
-                    curr[ind2] = max(prev[ind2],curr[ind2-1]);
+                    dp[i][j] = max(dp[i-1][j],dp[i][j-1]);
                 }
             }
-            prev = curr;
         }
-        return prev[m];
+        return dp[n-1][m-1];
     }
 };

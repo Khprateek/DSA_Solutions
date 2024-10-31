@@ -1,26 +1,26 @@
 class Solution {
-    private:
-    int sus(int ind,vector<int>& nums,bool last,vector<vector<int>> &dp){
-        if(ind < 0) return 0;
-        if(ind == 0){
-            if(last){
-                return 0;
-            }
-            else{
-                return nums[0];
-            }
-        }
-        if(dp[ind][last] != -1) return dp[ind][last];
-        int notpick = sus(ind-1,nums,last,dp);
-        if(ind == nums.size()-1) last = true;
-        int pick = nums[ind] + sus(ind-2,nums,last,dp);
-        return dp[ind][last] = max(pick,notpick);
-    }
 public:
     int rob(vector<int>& nums) {
         int n = nums.size();
-        bool last = false;
-        vector<vector<int>> dp(n,vector<int>(2,-1));
-        return sus(n-1,nums,last,dp);
+        if(n == 1) return nums[0];
+        vector<vector<int>> dp(n,vector<int>(2,0));
+        dp[0][0] = nums[0];
+        dp[1][0] = max(nums[0], nums[1]);
+        dp[1][1] = nums[1];
+        for(int ind =2; ind < n; ind++){
+            for(int last = 0;last <2;last++){
+
+                int notpick = dp[ind-1][last];
+                int pick = nums[ind] + dp[ind-2][last];
+
+                if(ind == n-1 && last == 0){
+                    dp[ind][last] = notpick;
+                }
+                else{
+                    dp[ind][last] = max(pick,notpick);
+                }
+            }
+        }
+        return max(dp[n-1][0],dp[n-1][1]);
     }
 };

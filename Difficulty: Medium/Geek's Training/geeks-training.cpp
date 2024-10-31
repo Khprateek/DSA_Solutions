@@ -4,26 +4,30 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
-    private:
-    int sus(int ind, int last, vector<vector<int>>& arr,vector<vector<int>> &dp){
-        if(ind < 0) return 0;
-        if(dp[ind][last] != -1) return dp[ind][last];
-        int maxi = 0;
-        for(int i =0 ;i <3; i++){
-            if(i != last ){
-                int coin = arr[ind][i] + sus(ind-1,i,arr,dp);
-                maxi = max(maxi,coin);
-            }
-        }
-        return dp[ind][last] = maxi;
-    }
   public:
     int maximumPoints(vector<vector<int>>& arr, int n) {
-        vector<vector<int>> dp(n, vector<int>(4,-1));
-        return sus(n-1,3,arr,dp);
+        if(n == 0) return 0;
+        if(n == 1){
+            return max(arr[0][0],max(arr[0][1],arr[1][2]));
+        }
+        int prev0 =0;
+        int prev1 =0;
+        int prev2 =0;
+        int prev3 =0;
+        for(int ind =0;ind < n; ind++){
+            int curr0 =arr[ind][0] + max(prev1,prev2);
+            int curr1 =arr[ind][1] + max(prev0,prev2);
+            int curr2 =arr[ind][2] + max(prev0,prev1);
+            prev0 = curr0;
+            prev1 = curr1;
+            prev2 = curr2;
+        }
+        return max(prev0,max(prev1,prev2));
     }
 };
+
 
 //{ Driver Code Starts.
 int main() {
@@ -45,6 +49,7 @@ int main() {
 
         Solution obj;
         cout << obj.maximumPoints(arr, n) << endl;
+        cout << "~" << endl;
     }
     return 0;
 }
